@@ -1,12 +1,20 @@
 import express from "express";
-import bodyParser from "body-parser";
+import mongoose from "mongoose";
 
-const server = express();
+import usersRouter from "./routes/users.js";
 
-server.use(bodyParser.json());
+const app = express();
 
-server.get('/test', (req, res) => {
-    res.send('Ok');
+const port = 3000;
+
+app.use(express.json());
+
+mongoose.connect('mongodb://localhost:27017/myapp', () => {
+    console.log('Connected to mongoDB');
 });
 
-server.listen(3000, () => { console.log('Server started') });
+app.use('/users', usersRouter);
+
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+});
