@@ -1,0 +1,17 @@
+scalar ISODate
+
+type User {
+    id: ID
+    mail: String
+    username: String
+    password: String
+    playedGames: Int
+    wonGames: Int
+    rating: Int
+    lastLogin: ISODate
+}
+
+type Query {
+    getUsers: [User]
+    getUser(id: ID!): User
+}
