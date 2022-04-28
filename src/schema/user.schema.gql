@@ -1,17 +1,29 @@
 scalar ISODate
 
 type User {
-    id: ID
-    mail: String
-    username: String
-    password: String
+    id: ID!
+    mail: String!
+    username: String!
+    password: String!
     playedGames: Int
     wonGames: Int
     rating: Int
     lastLogin: ISODate
 }
 
+type Status {
+    status: Boolean
+    message: String
+}
+
 type Query {
     getUsers: [User]
     getUser(id: ID!): User
+}
+
+type Mutation {
+    addUser(mail: String!, username: String!, password: String!): Status!
+    updateUser(id: ID!, mail: String, username: String, password: String,
+               playedGames: Int, wonGames: Int, rating: Int): Status!
+    deleteUser(id: ID!): Status!
 }
