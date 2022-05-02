@@ -1,29 +1,39 @@
-scalar ISODate
-
-type User {
-    id: ID!
-    mail: String!
-    username: String!
-    password: String!
-    playedGames: Int
-    wonGames: Int
-    rating: Int
-    lastLogin: ISODate
-}
-
-type Status {
-    status: Boolean
-    message: String
-}
+scalar Date
 
 type Query {
-    getUsers: [User]
-    getUser(id: ID!): User
+  users: [User]!
+  user(id: ID!): User
+  findUser(username: String!): User
+
+  authenticate(username: String!, password: String!): AuthReponse!
 }
 
 type Mutation {
-    addUser(mail: String!, username: String!, password: String!): Status!
-    updateUser(id: ID!, mail: String, username: String, password: String,
-               playedGames: Int, wonGames: Int, rating: Int): Status!
-    deleteUser(id: ID!): Status!
+  addUser(mail: String!, username: String!, password: String!): Status!
+  updateUser(id: ID!, mail: String, username: String, password: String,
+             playedGames: Int, wonGames: Int, rating: Int): Status!
+  deleteUser(id: ID!): Status!
+}
+
+type User {
+  id: ID!
+  mail: String!
+  username: String!
+
+  playedGames: Int!
+  wonGames: Int!
+  rating: Int!
+
+  lastLogin: Date
+}
+
+type AuthReponse implements Status {
+  user: User  
+  succes: Boolean
+  message: String
+}
+
+interface Status {
+  succes: Boolean!
+  message: String!
 }
