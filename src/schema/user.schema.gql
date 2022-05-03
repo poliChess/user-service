@@ -4,11 +4,11 @@ type Query {
   users: [User]!
   user(id: ID!): User
   findUser(username: String!): User
-
-  authenticate(username: String!, password: String!): AuthReponse!
 }
 
 type Mutation {
+  authenticate(username: String!, password: String!): AuthReponse!
+
   addUser(mail: String!, username: String!, password: String!): Status!
   updateUser(id: ID!, mail: String, username: String, password: String,
              playedGames: Int, wonGames: Int, rating: Int): Status!
@@ -29,8 +29,8 @@ type User {
 
 type AuthReponse implements Status {
   user: User  
-  succes: Boolean
-  message: String
+  succes: Boolean!
+  message: String!
 }
 
 interface Status {
