@@ -9,9 +9,8 @@ const app = express();
 
 const port = 3000;
 
-// TODO: mlab (or some other non-local db)
-mongoose.connect('mongodb://localhost:27017/myapp', () => {
-    console.log('Connected to mongoDB');
+mongoose.connect('mongodb://mongo:27017/user-service', () => {
+    console.log('user service connected to mongo');
 });
 
 app.use('/graphql', graphqlHTTP({
@@ -21,5 +20,5 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
+    console.log(`user service started`);
 });
