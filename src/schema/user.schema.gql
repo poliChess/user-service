@@ -12,7 +12,7 @@ type Mutation {
 
   addUser(mail: String!, username: String!, password: String!): StandardStatus!
   updateUser(id: ID!, mail: String, username: String, password: String,
-             playedGames: Int, wonGames: Int, rating: Int): StandardStatus!
+             playedGames: Int, wonGames: Int, rating: Int): UpdateUserResponse!
   deleteUser(id: ID!): StandardStatus!
 }
 
@@ -28,18 +28,26 @@ type User {
   lastLogin: Date
 }
 
-interface Status {
-  success: Boolean!
-  message: String!
-}
-
 type StandardStatus implements Status {
   success: Boolean!
   message: String!
 }
 
 type AuthReponse implements Status {
+  user: User
   success: Boolean!
   message: String!
-  user: User
 }
+
+type UpdateUserResponse implements Status {
+  user: User
+  success: Boolean!
+  message: String!
+}
+
+interface Status {
+  success: Boolean!
+  message: String!
+}
+
+

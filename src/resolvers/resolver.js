@@ -52,15 +52,16 @@ const resolver = {
         const { id, mail, username, password, playedGames, wonGames, rating } = args;
 
         try {
-            await User.findByIdAndUpdate(id, {
+            const user = await User.findByIdAndUpdate(id, {
                 mail: mail,
                 username: username,
                 password: password,
                 playedGames: playedGames,
                 wonGames: wonGames,
                 rating: rating
-            });
-            return statusGood;
+              }, { new: true });
+            console.log(user);
+            return { user, ...statusGood };
         } catch (err) { return statusBad(err.message) }
     },
 
