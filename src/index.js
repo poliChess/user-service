@@ -9,7 +9,7 @@ const app = express();
 
 const port = 3000;
 
-mongoose.connect('mongodb://mongo:27017/user-service', () => {
+mongoose.connect('mongodb://localhost:27017/user-service', () => {
     console.log('user service connected to mongo');
 });
 

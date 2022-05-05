@@ -6,9 +6,20 @@ const resolver = {
     user: async (args) => { return await User.findById(args.id) },
     
     findUser: async (args) => {
-        const users = await User.find({ username: args.username });
         // The username is unique (see user.model.js)
-        return users[0];
+        const user = await User.findOne({ username: args.username });
+        return user;
+    },
+
+    findUsers: async (args) => {
+        const users = [];
+
+        for (const username of args.usernames) {
+            const user = await resolver.findUser({ username: username });
+            if (user) users.push(user);
+        }
+
+        return users;
     },
 
     authenticate: async (args) => {

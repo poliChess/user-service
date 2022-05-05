@@ -40,6 +40,9 @@ const userSchema = new Schema({
     timestamps: true
 });
 
+// Index username (for fast searches)
+userSchema.index({ username: 1 });
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
