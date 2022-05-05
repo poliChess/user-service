@@ -1,4 +1,5 @@
-const statusGood = { status: true, message: "ok" };
-const statusBad = (msg) => { return { status: false, message: msg } };
+const statusGood = { success: true, message: 'Ok' };
+const statusBad = (msg) => { return { success: false, message: msg } };
+const authResponse = (usr) => { return { success: true, message: 'Ok', user: usr} }
 
-export { statusGood, statusBad };
+export { statusGood, statusBad, authResponse };

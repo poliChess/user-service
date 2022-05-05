@@ -9,10 +9,10 @@ type Query {
 type Mutation {
   authenticate(username: String!, password: String!): AuthReponse!
 
-  addUser(mail: String!, username: String!, password: String!): Status!
+  addUser(mail: String!, username: String!, password: String!): StandardStatus!
   updateUser(id: ID!, mail: String, username: String, password: String,
-             playedGames: Int, wonGames: Int, rating: Int): Status!
-  deleteUser(id: ID!): Status!
+             playedGames: Int, wonGames: Int, rating: Int): StandardStatus!
+  deleteUser(id: ID!): StandardStatus!
 }
 
 type User {
@@ -27,13 +27,18 @@ type User {
   lastLogin: Date
 }
 
-type AuthReponse implements Status {
-  user: User  
-  succes: Boolean!
+interface Status {
+  success: Boolean!
   message: String!
 }
 
-interface Status {
-  succes: Boolean!
+type StandardStatus implements Status {
+  success: Boolean!
   message: String!
+}
+
+type AuthReponse implements Status {
+  success: Boolean!
+  message: String!
+  user: User
 }
