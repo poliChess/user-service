@@ -1,5 +1,5 @@
 const statusGood = { success: true, message: 'ok' };
 const statusBad = (msg) => ({ success: false, message: msg });
-const authResponse = (user) => ({ user, ...statusGood })
+const userResponse = (user) => ({ user, ...statusGood })
 
-export { statusGood, statusBad, authResponse };
+export { statusGood, statusBad, userResponse };

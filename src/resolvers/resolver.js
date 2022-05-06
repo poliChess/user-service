@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import { statusBad, statusGood, authResponse } from "../utils.js";
+import { statusBad, statusGood, userResponse } from "../utils.js";
 
 const resolver = {
     users: async () => { return await User.find() },
@@ -32,7 +32,7 @@ const resolver = {
             // TODO: password hashing
             if (user.password !== password) return statusBad('Incorrect password')
             
-            return authResponse(user);
+            return userResponse(user);
 
         } catch(err) { return statusBad(err.message) }
     },
@@ -60,8 +60,7 @@ const resolver = {
                 wonGames: wonGames,
                 rating: rating
               }, { new: true });
-            console.log(user);
-            return { user, ...statusGood };
+            return userResponse(user);
         } catch (err) { return statusBad(err.message) }
     },
 

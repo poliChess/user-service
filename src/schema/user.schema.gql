@@ -8,11 +8,11 @@ type Query {
 }
 
 type Mutation {
-  authenticate(username: String!, password: String!): AuthReponse!
+  authenticate(username: String!, password: String!): UserResponse!
 
   addUser(mail: String!, username: String!, password: String!): StandardStatus!
   updateUser(id: ID!, mail: String, username: String, password: String,
-             playedGames: Int, wonGames: Int, rating: Int): UpdateUserResponse!
+             playedGames: Int, wonGames: Int, rating: Int): UserResponse!
   deleteUser(id: ID!): StandardStatus!
 }
 
@@ -33,13 +33,7 @@ type StandardStatus implements Status {
   message: String!
 }
 
-type AuthReponse implements Status {
-  user: User
-  success: Boolean!
-  message: String!
-}
-
-type UpdateUserResponse implements Status {
+type UserResponse implements Status {
   user: User
   success: Boolean!
   message: String!
@@ -49,5 +43,3 @@ interface Status {
   success: Boolean!
   message: String!
 }
-
-
