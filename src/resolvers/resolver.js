@@ -34,7 +34,9 @@ const resolver = {
             
             return userResponse(user);
 
-        } catch(err) { return statusBad(err.message) }
+        } catch(err) {
+            return statusBad(err.message);
+        }
     },
 
     addUser: async (args) => {
@@ -45,23 +47,53 @@ const resolver = {
         try {
             await newUser.save();
             return statusGood;
-        } catch (err) { return statusBad(err.message) }
+        } catch (err) {
+            // Invalid parameters
+            const badField = Object.keys(err.keyPattern)[0];
+            switch (badField) {
+                case 'mail':
+                    return statusBad('Mail already taken');
+                
+                case 'username':
+                    return statusBad('Username already taken');
+            }
+
+            // Other errors
+            return statusBad(err.message);
+        }
     },
 
     updateUser: async (args) => {
         const { id, mail, username, password, playedGames, wonGames, rating } = args;
+        const updateArgs = {
+            mail: mail,
+            username: username,
+            password: password,
+            playedGames: playedGames,
+            wonGames: wonGames,
+            rating: rating
+        };
 
         try {
-            const user = await User.findByIdAndUpdate(id, {
-                mail: mail,
-                username: username,
-                password: password,
-                playedGames: playedGames,
-                wonGames: wonGames,
-                rating: rating
-              }, { new: true });
+            const user = await User.findByIdAndUpdate(id, updateArgs, {new : true});
             return userResponse(user);
-        } catch (err) { return statusBad(err.message) }
+        } catch (err) {
+            // Bad ID
+            if (err.kind === 'ObjectId') return statusBad('ID not found');
+
+            // Invalid parameters
+            const badField = Object.keys(err.keyPattern)[0];
+            switch (badField) {
+                case 'mail':
+                    return statusBad('Mail already taken');
+                
+                case 'username':
+                    return statusBad('Username already taken');
+            }
+
+            // Other errors
+            return statusBad(err.mesasge);
+        }
     },
 
     deleteUser: async (args) => {
@@ -70,7 +102,13 @@ const resolver = {
         try {
             await User.findByIdAndDelete(id);
             return statusGood;
-        } catch(err) { return statusBad(err.message) }
+        } catch(err) {
+            // Bad ID
+            if (err.kind === 'ObjectId') return statusBad('ID not found');
+            
+            // Other errors
+            return statusBad(err.message);
+        }
     }
 };
 
