@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
 import { statusBad, statusGood, userResponse } from "../utils.js";
 
@@ -29,8 +30,9 @@ const resolver = {
             const user = await resolver.findUser({ username: username });
             if (!user) return statusBad('Incorrect username')
             
-            // TODO: password hashing
-            if (user.password !== password) return statusBad('Incorrect password')
+            const saltedPassword = user.password;
+            const isEqual = await bcrypt.compare(password, saltedPassword);
+            if (!isEqual) return statusBad('Incorrect password')
             
             return userResponse(user);
 
@@ -42,7 +44,12 @@ const resolver = {
     addUser: async (args) => {
         const { mail, username, password } = args;
 
-        const newUser = new User({ mail, username, password });
+        // Password hashing
+        const saltRounds = 10; // more rounds => more secure + slower
+        const saltedPassword = await bcrypt.hash(password, saltRounds);
+        console.log(saltedPassword);
+
+        const newUser = new User({ mail: mail, username: username, password: saltedPassword });
 
         try {
             await newUser.save();
