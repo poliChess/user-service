@@ -73,13 +73,20 @@ const resolver = {
     updateUser: async (args) => {
         const { id, mail, username, password, playedGames, wonGames, rating } = args;
         const updateArgs = {
-            mail: mail,
-            username: username,
-            password: password,
-            playedGames: playedGames,
-            wonGames: wonGames,
-            rating: rating
+            mail, username, password, playedGames, wonGames, rating
         };
+
+        for (const key in updateArgs) {
+            if (updateArgs[key] === null || updateArgs[key] === undefined)
+                delete updateArgs[key];
+        }
+
+        // TODO: handle update password with salts !!
+        if (updateArgs.password) {
+            const saltRounds = 10; // more rounds => more secure + slower
+            const saltedPassword = await bcrypt.hash(password, saltRounds);
+            updateArgs.password = saltedPassword;
+        }
 
         try {
             const user = await User.findByIdAndUpdate(id, updateArgs, {new : true});
