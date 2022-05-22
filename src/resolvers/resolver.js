@@ -81,7 +81,6 @@ const resolver = {
                 delete updateArgs[key];
         }
 
-        // TODO: handle update password with salts !!
         if (updateArgs.password) {
             const saltRounds = 10; // more rounds => more secure + slower
             const saltedPassword = await bcrypt.hash(password, saltRounds);
