@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
-import { statusBad, statusGood, userResponse } from "../utils.js";
+import { statusBad, statusGood, userResponse, convertId } from "../utils.js";
 
 const resolver = {
     users: async () => { return await User.find() },
@@ -121,6 +121,33 @@ const resolver = {
             
             // Other errors
             return statusBad(err.message);
+        }
+    },
+
+    getOrAddGoogleUser: async (args) => {
+        const { id, mail, username } = args;
+
+        try {
+          const user = await User.findByIdAndUpdate(
+            convertId(id),
+            {
+              $set: {
+                mail,
+                username,
+                // create some random password
+                password: (Math.random() + 1).toString(36)
+              }
+            },
+            { upsert: true}
+          );
+
+          if (!user)
+            return userResponse(await User.findById(convertId(id)));
+
+          return userResponse(user);
+        } catch(err) {
+          console.warn(err);
+          return statusBad('unknown error');
         }
     }
 };

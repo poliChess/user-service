@@ -14,6 +14,8 @@ type Mutation {
   updateUser(id: ID!, mail: String, username: String, password: String,
              playedGames: Int, wonGames: Int, rating: Int): UserResponse!
   deleteUser(id: ID!): StandardStatus!
+
+  getOrAddGoogleUser(id: ID!, mail: String, username: String): UserResponse!
 }
 
 type User {
