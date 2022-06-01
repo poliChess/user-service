@@ -7,6 +7,6 @@ COPY . .
 
 EXPOSE 3000
 
-RUN npm install
+RUN npm install --omit=dev
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "prod"]
