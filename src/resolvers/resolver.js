@@ -71,9 +71,9 @@ const resolver = {
     },
 
     updateUser: async (args) => {
-        const { id, mail, username, password, playedGames, wonGames, rating } = args;
+        const { id, mail, username, password, playedGames, wonGames, rating, avatar } = args;
         const updateArgs = {
-            mail, username, password, playedGames, wonGames, rating
+            mail, username, password, playedGames, wonGames, rating, avatar
         };
 
         for (const key in updateArgs) {

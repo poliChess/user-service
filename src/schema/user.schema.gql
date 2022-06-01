@@ -26,6 +26,7 @@ type User {
   playedGames: Int!
   wonGames: Int!
   rating: Int!
+  avatar: String!
 
   lastLogin: Date
 }

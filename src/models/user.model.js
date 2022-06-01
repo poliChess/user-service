@@ -32,6 +32,10 @@ const userSchema = new Schema({
         type: Number,
         default: 1000
     },
+    avatar: {
+        type: String,
+        default: 'pawn1'
+    },
     lastLogin: {
         type: Date,
         default: Date.now()
