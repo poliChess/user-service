@@ -47,7 +47,6 @@ const resolver = {
     // Password hashing
     const saltRounds = 10; // more rounds => more secure + slower
     const saltedPassword = await bcrypt.hash(password, saltRounds);
-    console.log(saltedPassword);
 
     const newUser = new User({ mail: mail, username: username, password: saltedPassword });
 
