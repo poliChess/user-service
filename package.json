@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/poliChess/user-service#readme",
   "dependencies": {
+    "@grpc/grpc-js": "^1.6.8",
+    "@grpc/proto-loader": "^0.7.0",
     "bcrypt": "^5.0.1",
     "express": "^4.17.3",
     "express-graphql": "^0.12.0",
